@@ -31,6 +31,11 @@ async function accessCerts(team: string): Promise<Record<string, string>> {
   return certs;
 }
 
+// only same-site relative paths, never //evil.com or /\evil.com
+export function safeRedirect(redirect?: string): string {
+  return redirect && /^\/(?![/\\])/.test(redirect) ? redirect : '/home';
+}
+
 export function isLocalDev(env: NodeJS.ProcessEnv = process.env): boolean {
   return (
     !!env.CF_ACCESS_DEV_EMAIL &&
@@ -103,8 +108,6 @@ export class CfAccessController {
       expires: this.environmentService.getCookieExpiresIn(),
       secure: this.environmentService.isHttps(),
     });
-    // only same-site relative paths, never //evil.com or /\evil.com
-    const target = redirect && /^\/(?![/\\])/.test(redirect) ? redirect : '/home';
-    return res.redirect(target, 302);
+    return res.redirect(safeRedirect(redirect), 302);
   }
 }
