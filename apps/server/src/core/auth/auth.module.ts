@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
+import { CfAccessController } from './cf-access.controller';
 import { AuthService } from './services/auth.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { WorkspaceModule } from '../workspace/workspace.module';
@@ -8,7 +9,7 @@ import { TokenModule } from './token.module';
 
 @Module({
   imports: [TokenModule, WorkspaceModule],
-  controllers: [AuthController],
+  controllers: [AuthController, CfAccessController],
   providers: [AuthService, SignupService, JwtStrategy],
   exports: [SignupService],
 })

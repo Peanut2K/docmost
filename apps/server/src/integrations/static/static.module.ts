@@ -4,6 +4,7 @@ import { join } from 'path';
 import * as fs from 'node:fs';
 import fastifyStatic from '@fastify/static';
 import { EnvironmentService } from '../environment/environment.service';
+import { accessEnabled } from '../../core/auth/cf-access.controller';
 
 @Module({})
 export class StaticModule implements OnModuleInit {
@@ -33,6 +34,8 @@ export class StaticModule implements OnModuleInit {
 
       const configString = {
         ENV: this.environmentService.getNodeEnv(),
+        // pinup-km fork
+        CF_ACCESS: accessEnabled(),
         APP_URL: this.environmentService.getAppUrl(),
         CLOUD: this.environmentService.isCloud(),
         FILE_UPLOAD_SIZE_LIMIT:
