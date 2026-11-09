@@ -23,7 +23,7 @@ jobs:
         with: { node-version: 22 }
       - run: npm install -g pnpm@11.28.2
       - run: pnpm install --frozen-lockfile
-      - run: pnpm exec jest src/core/auth/cf-access
+      - run: pnpm exec jest src/core/auth/cf-access src/core/search/km-search
         working-directory: apps/server
 
   build:

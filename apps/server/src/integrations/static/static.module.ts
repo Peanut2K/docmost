@@ -5,6 +5,7 @@ import * as fs from 'node:fs';
 import fastifyStatic from '@fastify/static';
 import { EnvironmentService } from '../environment/environment.service';
 import { accessEnabled } from '../../core/auth/cf-access.controller';
+import { kmSearchEnabled } from '../../core/search/km-search.controller';
 
 @Module({})
 export class StaticModule implements OnModuleInit {
@@ -36,6 +37,7 @@ export class StaticModule implements OnModuleInit {
         ENV: this.environmentService.getNodeEnv(),
         // pinup-km fork
         CF_ACCESS: accessEnabled(),
+        KM_SEARCH: kmSearchEnabled(),
         APP_URL: this.environmentService.getAppUrl(),
         CLOUD: this.environmentService.isCloud(),
         FILE_UPLOAD_SIZE_LIMIT:
